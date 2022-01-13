@@ -1,15 +1,49 @@
-body {
+html {
   background-color: lightpink;
 }
 
+body {
+  width: 1000px;
+  margin: 0 auto;
+}
+
 h1 {
-  font-size: xxx-large;
+  text-align: center;
+  font-size: 60px;
+  text-shadow: 3px 3px 1px white;
 }
-href {
-  
+
+p,
+li,
+td,
+tr {
+  font-size: 20px;
 }
+
+a:hover,
+#hätä:hover {
+  color: grey;
+}
+
+#hätä {
+  color: red;
+}
+
+.taulu {
+  margin: 0 auto;
+  border: 2px solid black;
+  width: 400px;
+  text-align: center;
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+}
+
 form {
   background-color: white;
   border-style: double;
-  right: -50%;
+  padding: 0px 0px 20px 30px;
+  margin: 0 auto;
 }
