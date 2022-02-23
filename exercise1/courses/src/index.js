@@ -4,13 +4,13 @@ import './index.css';
 
 const Header = (props) => {
   return (
-    <div><h1>{props.course}</h1></div>
+    <div><h1>{props.name}</h1></div>
   )
 }
 
 const Part = (props) => {
   return (
-    <div>{props.content.name} {props.content.exercises}</div>
+    <div><p>{props.content.name} {props.content.exercises}</p></div>
   )
 
 }
@@ -29,13 +29,14 @@ const Total = (props) => {
   let sum = 0;
   for(const element of props.parts) sum += element.exercises;
   return (
-    <div>Total {sum} exercises</div>
+    <div><p>Total {sum} exercises</p></div>
   )
 }
 
 const App = () => {
-  const course = 'Superadvanced web and mobile programming'
-  const parts = [
+  const course = {
+    name: 'Superadvanced web and mobile programming',
+    parts: [
     {
       name: 'Basics of React',
       exercises: 8
@@ -49,12 +50,13 @@ const App = () => {
       exercises: 12
     }
   ]
+}
 
   return (
     <div>
-      <Header course={course} />
-      <Contents parts={parts} />
-      <Total parts={parts} />
+      <Header name={course.name} />
+      <Contents parts={course.parts} />
+      <Total parts={course.parts} />
     </div>
   )
 }
