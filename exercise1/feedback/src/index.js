@@ -8,7 +8,7 @@ const Button = ({handleClick, text}) => (
 
 const Statistics = (props) => {
   //Tarkistaa onko annettu palautetta
-  if(props.hyvä === 0 && props.neutraali === 0 && props.huono === 0) return <div>Ei yhtään palautetta</div>
+  if(props.hyvä === 0 && props.neutraali === 0 && props.huono === 0) return <div>Ei yhtään palautetta annettu... :(</div>
   
   //Neutraalit (=0) ei ole positiivisia
   let positiiviset = (props.hyvä/(props.hyvä + props.neutraali + props.huono)*100);
@@ -17,19 +17,24 @@ const Statistics = (props) => {
   let keskiarvo = (props.hyvä-props.huono)/(props.hyvä + props.neutraali + props.huono);
 
   return (
-    <div>
-      <Statistic text="Hyvä" arvo={props.hyvä} > </Statistic>
-      <Statistic text="Neutraali" arvo={props.neutraali} />
-      <Statistic text="Huono" arvo={props.huono} />
-      <Statistic text="Keskiarvo" arvo={keskiarvo.toFixed(1)}/>
-      <Statistic text="Positiivisia" arvo={positiiviset.toFixed(1)} merkki="%"/>
-    </div>
+    <table>
+      <tbody>
+        <Statistic text="Hyvä" arvo={props.hyvä} />
+        <Statistic text="Neutraali" arvo={props.neutraali} />
+        <Statistic text="Huono" arvo={props.huono} />
+        <Statistic text="Keskiarvo" arvo={keskiarvo.toFixed(1)}/>
+        <Statistic text="Positiivisia" arvo={positiiviset.toFixed(1)} merkki="%"/>
+      </tbody>
+    </table>
   )
 }
 
 const Statistic = (props) => {
   return (
-    <p>{props.text} {props.arvo} {props.merkki}</p>
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.arvo} {props.merkki}</td>
+    </tr>
   )
 }
 
@@ -65,7 +70,6 @@ class App extends React.Component {
   }
 }
   
-
 ReactDOM.render(
   <App />,
   document.getElementById('root')
