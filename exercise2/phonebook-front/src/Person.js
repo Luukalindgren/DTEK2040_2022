@@ -1,3 +1,5 @@
+import React from "react"
+
 //EN SAANUT FUNKTIOITA JOTKA MUOKKAAVAT STATEA ERI MODULIIN, JOTEN TÄMÄ JÄI TOSI TYHJÄKSI...
 
 const Person = (props) => {
