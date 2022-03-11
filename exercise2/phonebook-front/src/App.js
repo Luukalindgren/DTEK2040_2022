@@ -1,36 +1,52 @@
 import React from 'react';
 import Person from './Person';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      persons: [
-        { name: 'Arto Hellas',
-          number: '040-123456'}
-      ],
+      persons: [],
       newName: '',
-      newNumber: ''
+      newNumber: '',
+      id: 0,
     }
+  }
+
+  componentDidMount() {
+    console.log('did mount') 
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        this.setState({ persons: response.data})
+      })
   }
 
   addPerson = (event) => {
     event.preventDefault()
     const personObject = {
         name: this.state.newName,
-        number: this.state.newNumber
-  }
+        number: this.state.newNumber,
+        id: this.state.persons[this.state.persons.length - 1].id + 1,
+    }
 
     const person = this.state.persons.concat(personObject)
 
     if(this.state.persons.some(x => x.name === personObject.name) || this.state.persons.some(y => y.number === personObject.number)) {
         alert("Person is already in the phonebook!")
     } else {
-    this.setState({ 
-        persons: person,
-        newName: '',
-        newNumber: '' })
-    }
+      axios
+        .post('http://localhost:3001/persons', personObject)
+        .then(response => {
+          console.log(response)
+          this.setState({
+            persons: person,
+            newName: '',
+            newNumber: '',
+            id: 0 })
+          })
+        }
   }
 
   handleNameChange = (event) => {
