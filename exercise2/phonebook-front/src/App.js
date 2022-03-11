@@ -2,6 +2,8 @@ import React from 'react';
 import Person from './Person';
 import axios from 'axios';
 
+
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -12,6 +14,7 @@ class App extends React.Component {
       id: 0,
     }
   }
+
 
   componentDidMount() {
     console.log('did mount') 
@@ -49,6 +52,25 @@ class App extends React.Component {
         }
   }
 
+  deletePerson = (id, name) => {
+    console.log('click')
+    return () => {
+      const url = `http://localhost:3001/persons/${id}`
+      if(window.confirm(`Delete ${name}?`)) {
+        axios
+          .delete(url)
+          .then(response => {
+            this.setState({
+              persons: this.state.persons.map(person => person.id !== id ? person : response.data), //TÄMÄ EI HYVÄ!
+              newName: '',
+              newNumber: '',
+              id: 0 })
+            })
+      }
+    }
+  }
+  
+
   handleNameChange = (event) => {
     console.log(event.target.value)
     this.setState({ newName: event.target.value })
@@ -78,7 +100,9 @@ class App extends React.Component {
         <table>
           <tbody>
             {this.state.persons.map(person => 
-              <Person key={person.name} name={person.name} number={person.number} />)}
+              <Person 
+                key={person.name} name={person.name} 
+                number={person.number} id={person.id} handleClick={this.deletePerson(person.id,person.name)}/>)}
           </tbody>
         </table>
       </div>
