@@ -3,7 +3,6 @@ import Person from './Person';
 import axios from 'axios';
 
 
-
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -14,7 +13,6 @@ class App extends React.Component {
       id: 0,
     }
   }
-
 
   componentDidMount() {
     console.log('did mount') 
@@ -53,7 +51,6 @@ class App extends React.Component {
   }
 
   deletePerson = (id, name) => {
-    console.log('click')
     return () => {
       const url = `http://localhost:3001/persons/${id}`
       if(window.confirm(`Delete ${name}?`)) {
@@ -61,7 +58,7 @@ class App extends React.Component {
           .delete(url)
           .then(response => {
             this.setState({
-              persons: this.state.persons.map(person => person.id !== id ? person : response.data), //TÄMÄ EI HYVÄ!
+              persons: this.state.persons.filter(person => person.id !== id ), //TÄMÄ EI HYVÄ!
               newName: '',
               newNumber: '',
               id: 0 })
