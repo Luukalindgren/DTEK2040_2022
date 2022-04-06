@@ -1,5 +1,10 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
+
+const generateId = () => {
+    return Math.floor(Math.random() * 1000)
+}
 
 let persons = [
     {
@@ -23,6 +28,8 @@ let persons = [
         id: 4
     }
   ]
+
+app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
@@ -48,6 +55,26 @@ app.delete('/api/persons/:id', (req, res) => {
 
     res.status(204).end()
 })
+
+app.post('/api/persons', (req, res) => {
+    const body = req.body
+
+    if (body.name === (undefined || "") || body.number === (undefined || "") ||
+    persons.some(x => x.name === body.name)) { //Tarkistaa ettei nimi tai numero ole tyhjiä, eikä nimeä jo löydy
+        return res.status(400).json({error: 'name must be unique '})
+    } else {
+        const person = {
+            name: body.name,
+            number: body.number,
+            id: generateId()
+        }
+
+        persons = persons.concat(person)
+
+        res.json(person)
+    }
+})
+
 
 const PORT = 3001
 app.listen(PORT, () => {
