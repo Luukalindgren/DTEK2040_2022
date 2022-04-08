@@ -2,6 +2,10 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 
+const cors = require('cors')
+
+app.use(cors())
+
 const generateId = () => {
     return Math.floor(Math.random() * 1000)
 }
@@ -74,6 +78,7 @@ app.post('/api/persons', (req, res) => {
         res.json(person)
     }
 })
+
 
 
 const PORT = 3001

@@ -17,7 +17,7 @@ class App extends React.Component {
   componentDidMount() {
     console.log('did mount') 
     axios
-      .get('http://localhost:3001/persons')
+      .get('http://localhost:3001/api/persons')
       .then(response => {
         console.log('promise fulfilled')
         this.setState({ persons: response.data})
@@ -38,7 +38,7 @@ class App extends React.Component {
         alert("Person is already in the phonebook!")
     } else {
       axios
-        .post('http://localhost:3001/persons', personObject)
+        .post('http://localhost:3001/api/persons', personObject)
         .then(response => {
           console.log(response)
           this.setState({
@@ -52,7 +52,7 @@ class App extends React.Component {
 
   deletePerson = (id, name) => {
     return () => {
-      const url = `http://localhost:3001/persons/${id}`
+      const url = `http://localhost:3001/api/persons/${id}`
       if(window.confirm(`Delete ${name}?`)) {
         axios
           .delete(url)

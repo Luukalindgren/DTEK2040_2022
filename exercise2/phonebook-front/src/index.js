@@ -6,6 +6,7 @@ import App from './App.js';
 //VAIKKA OHJEIDEN MUKAAN CLASS:IN SAISI PELKÄLLÄ RENDER()RETURN() JOS EXPORTTAA SEN...
 //JOTEN TÄMÄ ON NYT HIEMAN TURHA TIEDOSTO
 
+
 ReactDOM.render(
   <App />,
   document.getElementById('root')
