@@ -1,25 +1,28 @@
 {
-  "name": "exercise3",
+  "name": "phonebook-back",
   "version": "1.0.0",
   "description": "DTEK2040_2022",
   "main": "index.js",
+  "engines": {
+    "node": "16.14.0",
+    "npm": "8.3.1"
+  },
   "scripts": {
     "start": "node index.js",
     "watch": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-    "type": "",
-    "url": ""
+    "type": "git",
+    "url": "git+https://github.com/Luukalindgren/DTEK2040_2022.git#master"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/Luukalindgren/DTEK2040_2022/issues"
   },
-  "homepage": "",
+  "homepage": "https://github.com/Luukalindgren/DTEK2040_2022/tree/master#readme",
   "dependencies": {
-    "cors": "^2.8.5",
     "express": "^4.17.3"
   },
   "devDependencies": {
