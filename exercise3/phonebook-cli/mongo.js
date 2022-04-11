@@ -13,7 +13,7 @@ process.argv.forEach((val, index) => {
 })
 
 //POISTA SALASANA TÄSTÄ ENNEN KUIN PALAUTAT!
-const url = 'mongodb+srv://Luuka:0rZ5oCjCwdNGZESs@koulu.fuvk0.mongodb.net/fullstack-phonebook'
+const url = 'mongodb+srv://Luuka:SALASANA@koulu.fuvk0.mongodb.net/fullstack-phonebook'
 
 mongoose.connect(url)
 
