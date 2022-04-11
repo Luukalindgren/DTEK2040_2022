@@ -2,6 +2,12 @@ import React from 'react';
 import Person from './Person';
 import axios from 'axios';
 
+const baseUrl = '/api/persons'
+
+const getAll = () => {
+  const req = axios.get(baseUrl)
+  return req.then(res => res.data)
+}
 
 class App extends React.Component {
   constructor(props) {
@@ -17,7 +23,7 @@ class App extends React.Component {
   componentDidMount() {
     console.log('did mount') 
     axios
-      .get('http://localhost:3001/api/persons')
+      .get(baseUrl)
       .then(response => {
         console.log('promise fulfilled')
         this.setState({ persons: response.data})
@@ -38,7 +44,7 @@ class App extends React.Component {
         alert("Person is already in the phonebook!")
     } else {
       axios
-        .post('http://localhost:3001/api/persons', personObject)
+        .post(baseUrl, personObject)
         .then(response => {
           console.log(response)
           this.setState({
@@ -52,7 +58,7 @@ class App extends React.Component {
 
   deletePerson = (id, name) => {
     return () => {
-      const url = `http://localhost:3001/api/persons/${id}`
+      const url = `/api/persons/${id}`
       if(window.confirm(`Delete ${name}?`)) {
         axios
           .delete(url)
