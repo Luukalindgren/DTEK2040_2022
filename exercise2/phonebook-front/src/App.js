@@ -16,7 +16,7 @@ class App extends React.Component {
       persons: [],
       newName: '',
       newNumber: '',
-      id: 0,
+      id: "",
     }
   }
 
@@ -34,26 +34,22 @@ class App extends React.Component {
     event.preventDefault()
     const personObject = {
         name: this.state.newName,
-        number: this.state.newNumber,
-        id: this.state.persons[this.state.persons.length - 1].id + 1,
+        number: this.state.newNumber
     }
 
     const person = this.state.persons.concat(personObject)
 
-    if(this.state.persons.some(x => x.name === personObject.name) || this.state.persons.some(y => y.number === personObject.number)) {
-        alert("Person is already in the phonebook!")
-    } else {
-      axios
-        .post(baseUrl, personObject)
-        .then(response => {
-          console.log(response)
-          this.setState({
-            persons: person,
-            newName: '',
-            newNumber: '',
-            id: 0 })
-          })
-        }
+
+    axios
+      .post(baseUrl, personObject)
+      .then(response => {
+        console.log(response)
+        this.setState({
+          persons: person,
+          newName: '',
+          newNumber: '',
+          id: "" })
+        })
   }
 
   deletePerson = (id, name) => {
@@ -67,7 +63,7 @@ class App extends React.Component {
               persons: this.state.persons.filter(person => person.id !== id ), //TÄMÄ EI HYVÄ!
               newName: '',
               newNumber: '',
-              id: 0 })
+              id: "" })
             })
       }
     }
