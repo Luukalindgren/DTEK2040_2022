@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, ActivityIndicator, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, ScrollView } from 'react-native';
 
 
 class App extends React.Component {
@@ -35,25 +35,26 @@ class App extends React.Component {
 
   render() {
       return (
-        <View style={styles.container}>
-            {this.state.notes.map(note => <Text> { note } </Text>)}
+        <ScrollView contentContainerStyle = {styles.contentContainer} >
+            {this.state.notes.map(note => <Text style={{ fontSize: 50}}> { note } </Text>)}
 
-            <View style={styles.bottom}>
+            <View >
               <TextInput
+                style= {{ fontSize: 20, padding: 10}}
                 placeholder="Write the note here"
                 onChangeText={(newText) => this.setState({ setInputText: newText})}
               />
-              <Button onPress={this.addNote} title= {"ADD NOTE"} />
+              <Button style={{ position: 'absolute', bottom: 20}}onPress={this.addNote} title= {"ADD NOTE"} />
             </View>
-        </View>
+        </ScrollView>
       );
     }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
+  contentContainer: {
+    flexGrow: 1,
+    flexDirection: "column",
     alignItems: 'center',
     justifyContent: 'center',
   },
