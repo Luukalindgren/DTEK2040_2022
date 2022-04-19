@@ -1,7 +1,21 @@
 import * as React from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, ScrollView, Alert } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
+const Stack = createStackNavigator();
+
+const styles = StyleSheet.create({
+  contentContainer: {
+    flexGrow: 1,
+    flexDirection: "column",
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: "pink",
+    padding: 20
+  }
+});
 
 class App extends React.Component {
   constructor(props) {
@@ -18,52 +32,72 @@ class App extends React.Component {
     }
   }
 
+  createAlert = () => {
+    Alert.alert(
+      "Duplicate note!",
+      "Note is already written, please change it",
+      [
+        {
+          text: "OK",
+          onPress: () => console.log("OK Pressed")
+        }
+      ])
+  }
+
   addNote = (event) => {
     event.preventDefault()
     const noteObject = this.state.setInputText;
 
-    const note = this.state.notes.concat(noteObject);
+    if(this.state.notes.includes(noteObject)) {
+        this.createAlert();
+    } else {
+        const note = this.state.notes.concat(noteObject);
 
-    this.setState({
-      notes: note,
-      text: "",
-      setInputText: ""
-    })
-    console.log(note);
-    console.log(this.state.notes);
+        this.setState({
+          notes: note,
+          text: "",
+          setInputText: ""
+        })
+      console.log(note);
+      }
+      this.textInput.clear()
+      console.log(this.state.notes);
+  }
+
+  DefaultScreen = (props) => {
+    return (
+      <ScrollView contentContainerStyle = {styles.contentContainer} >
+        {this.state.notes.map(note => <Text style={{ fontSize: 30, padding: 10}}> { note } </Text>)}
+        <Button color = "darkgrey" title="ADD NOTES" onPress={() => props.navigation.navigate("Add a Note")} />
+      </ScrollView>
+    )
+  }
+
+  AddScreen = (props) => {
+    return (
+      <View>
+        <TextInput
+          ref={input => { this.textInput = input }}
+          style= {{ fontSize: 20, padding: 20, backgroundColor: "lightgray"}}
+          placeholder="Write the note here"
+          onChangeText={(newText) => this.setState({ setInputText: newText})}
+        />
+        <Button color = "darkgrey" onPress={this.addNote} title= {"ADD NOTE"} />
+      </View>
+    )
   }
 
   render() {
       return (
-        <ScrollView contentContainerStyle = {styles.contentContainer} >
-            {this.state.notes.map(note => <Text style={{ fontSize: 50}}> { note } </Text>)}
-
-            <View >
-              <TextInput
-                style= {{ fontSize: 20, padding: 10}}
-                placeholder="Write the note here"
-                onChangeText={(newText) => this.setState({ setInputText: newText})}
-              />
-              <Button style={{ position: 'absolute', bottom: 20}}onPress={this.addNote} title= {"ADD NOTE"} />
-            </View>
-        </ScrollView>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Welcome to Notes">
+          <Stack.Screen name="Welcome to Notes" component={this.DefaultScreen} />
+          <Stack.Screen name="Add a Note" component={this.AddScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
       );
+
     }
 }
 
-const styles = StyleSheet.create({
-  contentContainer: {
-    flexGrow: 1,
-    flexDirection: "column",
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  bottom: {
-    position: 'absolute',
-    bottom: 10,
-    left: 10
-  }
-});
-
-
-export default App
+export default App;
